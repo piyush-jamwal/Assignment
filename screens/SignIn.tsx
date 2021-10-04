@@ -17,21 +17,25 @@ import {
 } from "native-base";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
+import { useDispatch } from "react-redux";
 export default function SignIn({ navigation }) {
   function formSubmit() {
     if (typedName === null) {
       setMessage("Please fill all the fields.");
     } else if (typedPassword == null) {
       setMessage("Please fill all the fields.");
-    } else if (password === typedPassword && userName === typedName) {
-      navigation.navigate("App");
+    } else if (password === typedPassword && userName == typedName) {
+      dispatch({
+        type: "isSignedIn",
+        payload: { isSignedIn: true },
+      });
     }
   }
   let [typedName, setName] = useState(null),
     [typedPassword, setPassword] = useState(null),
     [message, setMessage] = useState("");
   const state = useSelector((curSele) => curSele);
+  const dispatch = useDispatch();
   let userName, password;
   if (state.userData) {
     userName = state.userData.name;

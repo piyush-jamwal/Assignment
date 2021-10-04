@@ -19,58 +19,66 @@ import Accepted from "../screens/Accepted";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import Applied from "../screens/Applied";
-import ModalScreen from "../screens/ModalScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ShiftScreen from "../screens/ShiftScreen";
+
 import SignUp from "../screens/RegisterScreen";
 import SignIn from "../screens/SignIn";
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from "../types";
+import { RootTabParamList, RootTabScreenProps } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { NavigationEvents } from "react-navigation";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
+  const state = useSelector((curState) => curState);
+
+  let userStatus = false;
+  if (state.isSignedIn) {
+    userStatus = state.isSignedIn;
+  }
+  console.log("is LoggedIn", userStatus);
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
     >
-      <MyStack />
+      <Stack.Navigator>
+        {userStatus ? (
+          <Stack.Screen
+            name="App"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          Auth()
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
 const Stack = createNativeStackNavigator();
 
-const MyStack = () => {
+const Auth = () => {
   return (
-    <Stack.Navigator>
+    <>
       <Stack.Screen
         name="SignUp"
         component={SignUp}
         options={{ title: "Welcome" }}
       />
       <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen
-        name="App"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    </>
   );
 };
+
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
-
+  const dispatch = useDispatch();
   return (
     <BottomTab.Navigator
       initialRouteName="TabOne"
@@ -86,13 +94,15 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate("Modal")}
+              onPress={() =>
+                dispatch({ type: "isSignedIn", payload: { isSignedIn: false } })
+              }
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}
             >
               <FontAwesome
-                name="info-circle"
+                name="sign-out"
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}

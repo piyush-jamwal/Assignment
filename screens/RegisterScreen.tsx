@@ -33,9 +33,8 @@ export default function SignUp({ navigation }) {
     } else {
       dispatch({
         type: "userData",
-        payload: { userData: { name, Age, email, password } },
+        payload: { userData: { name, password, email, Age }, isSignedIn: true },
       });
-      navigation.navigate("App");
     }
   }
   let [name, setName] = useState(""),

@@ -46,7 +46,13 @@ export const reducer = (state = InitialState, action) => {
       // console.log("object check++++++++", obj);
       return { ...state, openShifts: obj };
     case "userData":
-      console.log("userData check", action.payload);
+      // console.log("userData check", action.payload);
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case "isSignedIn":
+      console.log("reducer chj check", action.payload);
       return {
         ...state,
         ...action.payload,

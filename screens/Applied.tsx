@@ -14,9 +14,7 @@ export default function Applied({
   navigation,
 }: RootStackScreenProps<"NotFound">) {
   const state = useSelector((curState) => curState);
-  // state.openShifts.forEach((details) =>
-  //   console.log("Applied screen", details, details.isApplied)
-  // );
+
   return (
     <ScrollView>
       <View style={styles.container}>
