@@ -73,7 +73,7 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabTwo"
+      initialRouteName="TabOne"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}
@@ -82,7 +82,7 @@ function BottomTabNavigator() {
         name="TabOne"
         component={Open}
         options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
-          title: "Open",
+          title: "Open Shifts",
           tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
           headerRight: () => (
             <Pressable

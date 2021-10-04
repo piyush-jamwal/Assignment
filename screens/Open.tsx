@@ -17,7 +17,7 @@ import ShiftScreen from "./ShiftScreen";
 
 export default function Open({ navigation }: RootStackScreenProps<"Open">) {
   const state = useSelector((curState) => curState);
-  console.log("openShifts:", state.userData);
+  // console.log("openShifts:", state.userData);
 
   return (
     <ScrollView>

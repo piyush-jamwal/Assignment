@@ -25,11 +25,7 @@ function CardComponent(props) {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("TabThree");
-      }}
-    >
+    <TouchableOpacity onPress={() => {}}>
       <Box
         rounded="lg"
         overflow="hidden"
@@ -84,7 +80,7 @@ function CardComponent(props) {
             </HStack>
             {!props.details.isApplied ? (
               <Button
-                onPress={() =>
+                onPress={() => {
                   dispatch({
                     type: "isApplied",
                     payload: [
@@ -92,8 +88,9 @@ function CardComponent(props) {
                       props.details.id,
                       !props.details.isAccepted,
                     ],
-                  })
-                }
+                  });
+                  navigation.navigate("TabThree");
+                }}
               >
                 Apply
               </Button>

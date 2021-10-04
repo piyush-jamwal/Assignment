@@ -6,17 +6,7 @@ import { RootStackScreenProps } from "../types";
 export default function Accepted({
   navigation,
 }: RootStackScreenProps<"NotFound">) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Accepted.</Text>
-      <TouchableOpacity
-        onPress={() => navigation.replace("Root")}
-        style={styles.link}
-      >
-        <Text style={styles.linkText}>Go to home screen!</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  return <View style={styles.container}></View>;
 }
 
 const styles = StyleSheet.create({

@@ -16,7 +16,7 @@ const InitialState = {
       place: "CHILE, IL 60637",
       department: "NEUROLOGY Department",
       dateOfPost: "TUE,OCT 9,2018",
-      isApplied: true,
+      isApplied: false,
     },
     {
       id: 3,
@@ -25,7 +25,7 @@ const InitialState = {
       place: "HILE, IL 60637",
       department: "BIOCHEMISTRY Department",
       dateOfPost: "MON,OCT 8,2018",
-      isApplied: true,
+      isApplied: false,
     },
   ],
   userData: {},
@@ -38,11 +38,13 @@ export const reducer = (state = InitialState, action) => {
     case "SIGNUP":
       return { ...state, userData: action.payload };
     case "isApplied":
-      const obj = { ...state.openShifts[action.payload[0]], isApplied: true };
-      console.log("object check", obj);
-      return {
-        ...state,
+      const obj = [...state.openShifts];
+      obj[action.payload[0]] = {
+        ...state.openShifts[action.payload[0]],
+        isApplied: action.payload[2],
       };
+      // console.log("object check++++++++", obj);
+      return { ...state, openShifts: obj };
     case "userData":
       console.log("userData check", action.payload);
       return {
