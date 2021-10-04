@@ -1,21 +1,32 @@
 import * as React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import Card from "../components/shiftCard";
 import { RootStackScreenProps } from "../types";
+import { useSelector } from "react-redux";
 
 export default function Applied({
   navigation,
 }: RootStackScreenProps<"NotFound">) {
+  const state = useSelector((curState) => curState);
+  // console.log("Applied screen", state.openShifts);
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Applied</Text>
-      <TouchableOpacity
-        onPress={() => navigation.replace("Root")}
-        style={styles.link}
-      >
-        <Text style={styles.linkText}>Go to home screen!</Text>
-      </TouchableOpacity>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {state.openShifts
+          ? state.openShifts.map((details, index) => {
+              if (details.isApplied) {
+                return <Card key={index} details={details} />;
+              }
+            })
+          : []}
+      </View>
+    </ScrollView>
   );
 }
 

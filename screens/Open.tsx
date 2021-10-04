@@ -17,16 +17,23 @@ import ShiftScreen from "./ShiftScreen";
 
 export default function Open({ navigation }: RootStackScreenProps<"Open">) {
   const state = useSelector((curState) => curState);
-  console.log("open:", navigation);
+  console.log("openShifts:", state.userData);
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        {state.openShifts.map((details, index) => (
-          <Card key={index} details={details} navigation={navigation} />
-        ))}
-      </ScrollView>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        {state.openShifts
+          ? state.openShifts.map((details, index) => (
+              <Card
+                key={index}
+                details={details}
+                navigation={navigation}
+                index={index}
+              />
+            ))
+          : []}
+      </View>
+    </ScrollView>
   );
 }
 

@@ -1,41 +1,136 @@
 import * as React from "react";
-import { StyleSheet } from "react-native";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
+import {
+  NativeBaseProvider,
+  Box,
+  Text,
+  Heading,
+  VStack,
+  FormControl,
+  Input,
+  Link,
+  Button,
+  Icon,
+  IconButton,
+  HStack,
+  Divider,
+} from "native-base";
+import Navigation from "../navigation";
+import { ScrollView } from "react-native";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import EditScreenInfo from "../components/shiftCard";
-import { Text, View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+export default function SignUp({ navigation }) {
+  function formSubmit() {
+    if (name == "") {
+      setMessage("Please fill all the fields.");
+    } else if (email == "") {
+      setMessage("Please fill all the fields.");
+    } else if (password == "") {
+      setMessage("Please fill all the fields.");
+    } else if (Age == "") {
+      setMessage("Please fill all the fields.");
+    } else {
+      dispatch({
+        type: "userData",
+        payload: { userData: { name, Age, email, password } },
+      });
+      navigation.navigate("App");
+    }
+  }
+  let [name, setName] = useState(""),
+    [password, setPassword] = useState(""),
+    [email, setEmail] = useState(null),
+    [message, setMessage] = useState(""),
+    [Age, setAge] = useState("");
+  const dispatch = useDispatch();
 
-export default function RegistrationScreen({
-  navigation,
-}: RootTabScreenProps<"TabOne">) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Name</Text>
-      <Text style={styles.title}>Age</Text>
-      <Text style={styles.title}>Email</Text>
-      <Text style={styles.title}>Password</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-    </View>
+    <ScrollView>
+      <NativeBaseProvider>
+        <Box safeArea flex={1} p="2" w="90%" mx="auto" py="8">
+          <Heading size="lg" color="coolGray.800" fontWeight="600">
+            Welcome
+          </Heading>
+          <Heading mt="1" color="coolGray.600" fontWeight="medium" size="xs">
+            Sign up to continue!
+          </Heading>
+
+          <VStack space={3} mt="5">
+            <FormControl>
+              <FormControl.Label
+                _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}
+              >
+                Name
+              </FormControl.Label>
+              <Input
+                type="text"
+                isRequired={true}
+                onChangeText={(text) => setName(text)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label
+                _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}
+              >
+                Age
+              </FormControl.Label>
+              <Input
+                type="text"
+                isRequired={true}
+                onChangeText={(text) => setAge(text)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label
+                _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}
+              >
+                Email
+              </FormControl.Label>
+              <Input
+                type="text"
+                isRequired={true}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </FormControl>
+            <FormControl>
+              <FormControl.Label
+                _text={{ color: "muted.700", fontSize: "xs", fontWeight: 500 }}
+              >
+                Password
+              </FormControl.Label>
+              <Input
+                type="password"
+                isRequired={true}
+                onChangeText={(text) => setPassword(text)}
+              />
+            </FormControl>
+
+            <Button
+              mt="2"
+              colorScheme="indigo"
+              _text={{ color: "white" }}
+              onPress={formSubmit}
+            >
+              Sign up
+            </Button>
+            <Text>{message}</Text>
+            <Text fontSize="sm" color="muted.700" fontWeight={400}>
+              I'm a existing user{" "}
+            </Text>
+            <Link
+              _text={{
+                color: "indigo.500",
+                fontWeight: "medium",
+                fontSize: "sm",
+              }}
+              onPress={() => navigation.navigate("SignIn")}
+            >
+              Sign In
+            </Link>
+          </VStack>
+        </Box>
+      </NativeBaseProvider>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});
